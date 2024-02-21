@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Management Portal</title>
+    <link rel="stylesheet" href="{% static 'css/styles_newpage.css' %}">
+</head>
+<body background="{% static  'images/bgf.jpg' %}">
+    <h1>WELCOME TO OUR FOREST MANAGEMENT PORTAL</h1>
+    <h2>ARBORVISTA</h2>
+    <h3>AERIAL INTELLIGENCE FOR FOREST MANAGEMENT</h3>
+
+    <div class="options">
+        <form method="get" action="{% url 'show' %}">
+            <button type="submit" class="btn">Show plant details</button>
+        </form>
+    </div>
+
+    <p>Explore the beauty and importance of forests with these facts:</p>
+    <ul>
+        <li>Forests cover about 31% of the total land area on Earth.</li>
+        <li>Forests are home to over 80% of the world's terrestrial biodiversity.</li>
+        <li>They play a crucial role in mitigating climate change by absorbing carbon dioxide.</li>
+        <li>Forests provide habitat, food, and resources for countless species, including humans.</li>
+    </ul>
+
+    <h4>Research on Extinct Species:</h4>
+    <p>Learn about the species that once inhabited these forests:</p>
+    <ul>
+        <li>Discover extinct species and their historical significance.</li>
+        <li>Explore how conservation efforts are helping to prevent further extinctions.</li>
+        <!-- Add more points related to extinct species research -->
+    </ul>
+
+    <h4>Major Tree Species:</h4>
+    <p>Get to know the major tree species in our forests:</p>
+    <ul>
+        <li>Learn about the characteristics and ecological importance of key tree species.</li>
+        <li>Explore the role each species plays in maintaining the ecosystem.</li>
+        <!-- Add more points related to major tree species research -->
+    </ul>
+
+<script>
+    function resumeProject() {
+        // Sample data for resuming a project
+        const projectName = "Sample Project";
+        const projectDescription = "Exploring Forests in North Region";
+        const lastModified = "2024-02-14";
+        
+        // Log the data (replace with your actual logic)
+        console.log(`Resuming Project: ${projectName}`);
+        console.log(`Description: ${projectDescription}`);
+        console.log(`Last Modified: ${lastModified}`);
+    }
+
+    function startNewProject() {
+            // Add logic to start a new project
+            console.log("Starting a new project...");
+            fetch('/run_matlab_code')
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error(error));
+    }
+</script>
+</body>
+</html>

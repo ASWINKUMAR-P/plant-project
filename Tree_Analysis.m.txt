@@ -1,0 +1,217 @@
+imagePath = '';
+
+img = imread('D:\Xampp\htdocs\7906_sat_38.jpg');
+grayImg = rgb2gray(img);
+
+subplot(1, 2, 2);
+imshow(img);
+title('Original Image');
+
+treeSpeciesData = readtable('D:\Xampp\htdocs\Indian_Hybrid_tree_species.csv');
+uniqueSpecies = unique(treeSpeciesData.Species);
+
+figure;
+imhist(grayImg);
+title('Histogram');
+
+threshold = 100;
+binaryMask = grayImg > threshold;
+
+figure;
+imshow(binaryMask);
+title('Binary Mask');
+
+labeledMask = bwlabel(binaryMask);
+numTrees = max(labeledMask(:));
+
+figure;
+imshow(img);
+hold on;
+
+treeSpecies = cell(1, numTrees);
+speciesCount = zeros(1, numel(uniqueSpecies));
+speciesColors = hsv(numel(uniqueSpecies));
+
+for treeID = 1:numTrees
+    treeMask = labeledMask == treeID;
+    
+    randomSpeciesIndex = randi(numel(uniqueSpecies));
+    treeSpecies{treeID} = uniqueSpecies{randomSpeciesIndex};
+    
+    stats = regionprops(treeMask, 'Centroid');
+    centroid = stats.Centroid;
+    
+    scatter(centroid(1), centroid(2), 50, speciesColors(randomSpeciesIndex, :), 'filled');
+    
+    speciesCount(randomSpeciesIndex) = speciesCount(randomSpeciesIndex) + 1;
+end
+
+hold off;
+title('Tree Count on Original Image');
+
+deadTreeThreshold = 120;
+deadTreeBinaryMask = grayImg > deadTreeThreshold;
+
+figure;
+imshow(deadTreeBinaryMask);
+title('Dead Tree Binary Mask');
+
+deadTreeLabeledMask = bwlabel(deadTreeBinaryMask);
+numDeadTrees = max(deadTreeLabeledMask(:));
+
+figure;
+imshow(img);
+hold on;
+
+deadTreeSpecies = cell(1, numDeadTrees);
+deadSpeciesCount = zeros(1, numel(uniqueSpecies));
+
+for deadTreeID = 1:numDeadTrees
+    deadTreeMask = deadTreeLabeledMask == deadTreeID;
+    
+    randomSpeciesIndex = randi(numel(uniqueSpecies));
+    deadTreeSpecies{deadTreeID} = uniqueSpecies{randomSpeciesIndex};
+    
+    deadTreeStats = regionprops(deadTreeMask, 'Centroid');
+    centroid = deadTreeStats.Centroid;
+    
+    scatter(centroid(1), centroid(2), 50, 'r', 'filled');
+    
+    deadSpeciesCount(randomSpeciesIndex) = deadSpeciesCount(randomSpeciesIndex) + 1;
+end
+
+hold off;
+title('Tree Count on Original Image of dead species');
+
+labeledMask = bwlabel(binaryMask);
+numTrees = max(labeledMask(:));
+
+figure;
+imshow(img);
+hold on;
+
+treeSpecies = cell(1, numTrees);
+speciesCount = zeros(1, numel(uniqueSpecies));
+treeHeight = zeros(1, numTrees);
+treeWidth = zeros(1, numTrees);
+treeLength = zeros(1, numTrees);
+
+for treeID = 1:numTrees
+    treeMask = labeledMask == treeID;
+    
+    randomSpeciesIndex = randi(numel(uniqueSpecies));
+    treeSpecies{treeID} = uniqueSpecies{randomSpeciesIndex};
+    
+    stats = regionprops(treeMask, 'Centroid', 'BoundingBox', 'MajorAxisLength', 'MinorAxisLength');
+    
+    centroid = stats.Centroid;
+    
+    scatter(centroid(1), centroid(2), 50, speciesColors(randomSpeciesIndex, :), 'filled');
+    
+    speciesCount(randomSpeciesIndex) = speciesCount(randomSpeciesIndex) + 1;
+    
+    treeHeight(treeID) = stats.MajorAxisLength;
+    treeWidth(treeID) = stats.MinorAxisLength;
+    treeLength(treeID) = sqrt(stats.MajorAxisLength^2 + stats.MinorAxisLength^2);
+    
+    
+    fprintf('Tree %d Dimensions - Height: %.2f, Width: %.2f, Length: %.2f\n', treeID, treeHeight(treeID), treeWidth(treeID), treeLength(treeID));
+end
+
+hold off;
+title('Tree Count on Original Image with Dimensions (Min and Max)');
+
+figure;
+bar(speciesCount, 'FaceColor', 'b');
+xticklabels(uniqueSpecies);
+title('Live Species Distribution');
+
+figure;
+bar(deadSpeciesCount, 'FaceColor', 'r');
+xticklabels(uniqueSpecies);
+title('Dead Species Distribution');
+
+figure;
+bar(speciesCount, 'FaceColor', 'flat');
+xticklabels(uniqueSpecies);
+title('Species Distribution');
+
+numTrees = max(labeledMask(:));
+
+fprintf('Total number of trees: %d\n', numTrees);
+
+figure;
+h = pie(speciesCount, uniqueSpecies);
+title('Live Species Distribution (Pie Chart)');
+
+hPie = findobj(h, 'Type', 'patch');
+colors = hsv(length(uniqueSpecies));
+
+for i = 1:length(uniqueSpecies)
+    hPie(i).FaceColor = colors(i, :);
+end
+
+legend(uniqueSpecies, 'Location', 'eastoutside');
+
+textLabels = findobj(h, 'Type', 'text');
+for i = 1:length(textLabels)
+    if speciesCount(i) / sum(speciesCount) < 0.05
+        textLabels(i).String = '';
+    else
+        x = hPie(i).XData(2);
+        y = hPie(i).YData(2);
+        line([x, x * 1.1], [y, y * 1.1], 'Color', 'k');
+    end
+end
+
+treeSpeciesDistribution = containers.Map();
+
+for i = 1:numel(uniqueSpecies)
+    speciesName = uniqueSpecies{i};
+    speciesCount = sum(strcmp(treeSpecies, speciesName));
+    
+    validSpeciesName = matlab.lang.makeValidName(speciesName);
+    
+    treeSpeciesDistribution(validSpeciesName) = speciesCount;
+end
+
+areas = {'Area1', 'Area2', 'Area3'};
+deadTreeDistribution = struct();
+
+for i = 1:numel(areas)
+    areaName = areas{i};
+    deadTreeCount = randi([1, 10]);
+    deadTreeDistribution.(areaName) = deadTreeCount;
+end
+
+fprintf('Tree Species Distribution:\n');
+validFieldNames = keys(treeSpeciesDistribution);
+
+for i = 1:numel(validFieldNames)
+    speciesName = validFieldNames{i};
+    fprintf('%s: %d trees\n', speciesName, treeSpeciesDistribution(speciesName));
+end
+
+fprintf('\nDead Tree Distribution by Area:\n');
+areaNames = fieldnames(deadTreeDistribution);
+
+for i = 1:numel(areaNames)
+    areaName = areaNames{i};
+    fprintf('%s: %d dead trees\n', areaName, deadTreeDistribution.(areaName));
+end
+
+fprintf('Tree Species Distribution:\n');
+validFieldNames = keys(treeSpeciesDistribution);
+
+for i = 1:numel(validFieldNames)
+    speciesName = validFieldNames{i};
+    fprintf('%s: %d trees\n', speciesName, treeSpeciesDistribution(speciesName));
+end
+
+fprintf('\nDead Tree Distribution by Area:\n');
+areaNames = fieldnames(deadTreeDistribution);
+
+for i = 1:numel(areaNames)
+    areaName = areaNames{i};
+    fprintf('%s: %d dead trees\n', areaName, deadTreeDistribution.(areaName));
+end

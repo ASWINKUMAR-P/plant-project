@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form | Forest Project</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+    
+<body background="{% static  'images/bgf.jpg' %}">
+    {% if error %}
+    <script>
+        alert("{{ error }}");
+    </script>
+    {% endif %}
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="wrapper">
+            <h1>Login</h1>
+            <div class="input-box">
+                <input type="text" name="username" placeholder="Username" required>
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Password" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+            <div class="submit-box">
+                <input type="submit" value="Login" class="btn">
+            </div>
+            <!-- Additional Features -->
+            <div class="additional-features">
+                <div class="about-us">
+                    <h2>About Us</h2>
+                    <p>Aerial intelligence for forest management to explore the live status of the Tree Species</p>
+                </div>
+
+                <div class="contact-us">
+                    <h2>Contact Us</h2>
+                    <p>Email: gopa20101.ei@rmkec.ac.in<br>bhar20107.ei@rmkec.ac.in</p>
+                </div>
+
+                <div class="social-media">
+                    <h2>Connect With Us</h2>
+                    <a href="https://www.facebook.com/profile.php?id=100054232300221&mibextid=ZbWKwL" target="_blank"><i class='bx bxl-facebook-square'></i></a>
+                    <a href="https://github.com/JUSTINE-A1107" target="_blank"><i class='bx bxl-github'></i></a>
+                    <a href="https://www.instagram.com/_.justine.11_/" target="_blank"><i class='bx bxl-instagram-alt'></i></a>
+                    <a href="https://www.linkedin.com/in/gopalakrishnan-a-4017aa213" target="_blank"><i class='bx bxl-linkedin'></i></a>
+                </div>
+
+                <div class="forest-quote">
+                    <h2>Forest Wisdom</h2>
+                    <p>"The forest is not merely an expression or representation of sacredness, nor a place to invoke the
+                        sacred; the forest is sacredness itself."</p>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        function see() {
+            var x = document.getElementById("pass");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password"
+            }
+        }
+    </script>
+
+    <!-- Translator Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the language selector and login form elements
+            const languageSelector = document.getElementById("language");
+            const usernameInput = document.querySelector('input[name="username"]');
+            const passwordInput = document.querySelector('input[name="password"]');
+            const rememberCheckbox = document.querySelector('input[type="checkbox"]');
+            const forgotPasswordLink = document.querySelector('.remember-forgot a');
+            const loginButton = document.querySelector('.btn');
+            const registerLink = document.querySelector('.register-link p');
+
+            // Language translations
+            const translations = {
+                english: {
+                    username: "Username",
+                    password: "Password",
+                    remember: "Remember Me",
+                    forgotPassword: "Forgot Password ?",
+                    login: "Login",
+                    register: "Don't have an account? Register"
+                },
+                hindi: {
+                    username: "उपयोगकर्ता नाम",
+                    password: "पासवर्ड",
+                    remember: "मुझे याद रखें",
+                    forgotPassword: "पासवर्ड भूल गए ?",
+                    login: "लॉगिन",
+                    register: "खाता नहीं है? रजिस्टर करें"
+                },
+                tamil: {
+                    username: "பயனர்பெயர்",
+                    password: "கடவுச்சொல்",
+                    remember: "என்னை நினைவிரைக்கவும்",
+                    forgotPassword: "கடவுச்சொல் மறந்துவிட்டேன் ?",
+                    login: "உள்நுழை",
+                    register: "கணக்கில் இல்லை? பதிவு செய்க"
+                },
+                french: {
+                    username: "Nom d'utilisateur",
+                    password: "Mot de passe",
+                    remember: "Se souvenir de moi",
+                    forgotPassword: "Mot de passe oublié ?",
+                    login: "Connexion",
+                    register: "Vous n'avez pas de compte ? S'inscrire"
+                }
+            };
+
+            // Function to change language
+            function changeLanguage() {
+                const selectedLanguage = languageSelector.value;
+                // Update content based on the selected language
+                usernameInput.placeholder = translations[selectedLanguage].username;
+                passwordInput.placeholder = translations[selectedLanguage].password;
+                rememberCheckbox.nextElementSibling.textContent = translations[selectedLanguage].remember;
+                forgotPasswordLink.textContent = translations[selectedLanguage].forgotPassword;
+                loginButton.textContent = translations[selectedLanguage].login;
+                registerLink.textContent = translations[selectedLanguage].register;
+            }
+
+            // Add event listener to language selector
+            languageSelector.addEventListener("change", changeLanguage);
+        });
+    </script>
+    <!-- End of Translator Script -->
+
+    <script src="script.js"></script>
+</body>
+
+</html>

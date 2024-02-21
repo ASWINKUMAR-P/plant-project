@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+</head>
+<body>
+    <table>
+        <tr>
+            <th>TreeID</th>
+            <th>Species</th>
+            <th>Form</th>
+            <th>Growth_rate</th>
+            <th>Fall_color</th>
+            <th>Environmental_tolerances</th>
+            <th>Location_tolerances</th>
+            <th>Notes_suggested_cultivars</th>
+            <th>Tree_size</th>
+        </tr>
+        {% for tree in trees %}
+        <tr>
+            <td>{{ tree.tree_id }}</td>
+            <td>{{ tree.species }}</td>
+            <td>{{ tree.form }}</td>
+            <td>{{ tree.growth_rate }}</td>
+            <td>{{ tree.fall_color }}</td>
+            <td>{{ tree.environmental_tolerances }}</td>
+            <td>{{ tree.location_tolerances }}</td>
+            <td>{{ tree.notes_suggested_cultivars }}</td>
+            <td>{{ tree.tree_size }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

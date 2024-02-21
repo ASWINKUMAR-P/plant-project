@@ -1,0 +1,197 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden; /* Prevent scrolling */
+}
+
+.wrapper {
+  width: 90%; /* Adjust the width as needed */
+  max-width: 600px; /* Set a maximum width to ensure it doesn't become too wide on larger screens */
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, .2);
+  backdrop-filter: blur(9px);
+  color: #1a1a1a;
+  border-radius: 12px;
+  padding: 20px 20px;
+  margin: 10px auto; /* Add margin for space from top and bottom */
+}
+
+.wrapper h1 {
+  font-size: 36px;
+  text-align: center;
+  color: #09d6d6; /* Attractive black color for headings */
+}
+
+.input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin: 30px 0;
+}
+
+.input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: #1a1a1a;
+  padding: 20px 45px 20px 20px;
+  font-weight: bold;
+}
+
+.input-box input::placeholder {
+  color: #ffffff;
+}
+
+.input-box i {
+  position: absolute;
+  right: 20px;
+  top: 30%;
+  transform: translate(-50%);
+  font-size: 20px;
+}
+
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14.5px;
+  margin: -15px 0 15px;
+}
+
+.remember-forgot label input {
+  accent-color: #1a1a1a;
+  margin-right: 3px;
+}
+
+.remember-forgot a {
+  color: #f40505; 
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.remember-forgot a:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  width: 100%;
+  height: 45px;
+  background: #00a88b; 
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+  cursor: pointer;
+  font-size: 16px;
+  color: #000000; 
+  font-weight: 600;
+}
+
+.register-link {
+  font-size: 14.5px;
+  text-align: center;
+  margin: 20px 0 15px;
+}
+
+.register-link p a {
+  color: #000000; 
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-link p a:hover {
+  text-decoration: underline;
+}
+
+.additional-features {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.language-selector,
+.about-us,
+.contact-us,
+.social-media,
+.forest-quote {
+  margin-bottom: 20px;
+  color: #ffffff; /* Bright white color for content words */
+}
+
+/* Adjusted styles for better visibility of social media icons and contents */
+.social-media {
+  margin-bottom: 30px;
+}
+
+.social-media h2 {
+  color: #09d6d6;
+  margin-bottom: 10px;
+}
+
+.social-media a {
+  display: inline-block;
+  margin: 0 10px;
+  color: #b5f702; /* Attractive green color for social media icons */
+  font-size: 24px;
+  transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.social-media a:hover {
+  color: #ffcc00; /* Bright yellow color on hover for contrast */
+}
+
+.forest-quote {
+  color: #ffffff; /* Bright white color for content words */
+}
+
+/* Specific color changes as requested */
+.about-us p,
+.contact-us p,
+.forest-quote h2,
+.register-link p,
+.remember-forgot {
+  color: #ffffff; /* Set content to white for 'About Us', 'Contact Us', 'Forest Wisdom', and other related sections */
+}
+
+
+
+
+.about-us{
+color: #ffffff;
+}
+
+
+.contact-us{
+color: #ffffff;
+}
+
+.forest-quote {
+  color: #000000; /* Bright white color for content words */
+  font-weight: bolder;
+}
+
+/* Specific color changes as requested */
+.about-us,
+.contact-us h2 {
+ color: #09d6d6; /* Dark black color for 'About Us', 'Contact Us', and 'Forest Wisdom' */
+}
+
+.forest-quote h2{
+  color:#ffffff;
+}
+
+
